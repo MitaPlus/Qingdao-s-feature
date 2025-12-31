@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>青岛城市综合网站</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- 配置Tailwind自定义颜色和字体 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0A4DA2', // 青岛市政府官网主色调
+                        secondary: '#0E6EBE', // 次要蓝色，用于未激活按钮
+                        gold: '#FFB600',    // 橙色
+                        bronze: '#FFB600',  // 橙色
+                        silver: '#FFB600',  // 橙色
+                        seaBlue: '#1E90FF', // 海蓝色
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .year-text {
+                font-size: 0.75rem; /* 更小的年份字体 */
+            }
+            .timeline-connector {
+                @apply absolute left-5 top-6 bottom-0 w-0.5 bg-gray-200 -z-10;
+            }
+            .company-card {
+                @apply bg-white rounded-lg shadow-sm border border-gray-100 transition-all hover:shadow-md overflow-hidden;
+            }
+            .large-card {
+                @apply bg-white rounded-lg shadow-sm border border-gray-100 transition-all hover:shadow-md overflow-hidden;
+            }
+            .route-tag {
+                @apply inline-block px-2 py-1 text-xs rounded-full bg-primary/10 text-primary font-medium mr-2 mb-2;
+            }
+            .route-item {
+                @apply flex items-start mb-2;
+            }
+            .route-details {
+                @apply flex-1 text-sm text-gray-600;
+            }
+            .module-content {
+                display: none;
+            }
+            .module-content.active {
+                display: block;
+                animation: fadeIn 0.5s ease-in-out;
+            }
+            .active-module {
+                @apply bg-white text-primary;
+            }
+            .inactive-module {
+                @apply bg-secondary text-white;
+            }
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+    <!-- 头部信息区 -->
+    <section class="bg-primary text-white py-10 md:py-14">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-3xl md:text-4xl font-bold mb-4">青岛城市综合网站</h1>
+                <p class="opacity-90 mb-8">全面了解青岛市行政区划与公共交通信息（点击下方按钮可查看各板块的信息）</p>
+                
+                <!-- 模块切换导航 -->
+                <div class="flex flex-wrap justify-center gap-4">
+                    <button id="division-btn" class="inline-flex items-center px-6 py-2 rounded-full text-sm font-medium active-module">
+                        行政区划
+                    </button>
+                    <button id="transport-btn" class="inline-flex items-center px-6 py-2 rounded-full text-sm font-medium inactive-module">
+                        公共交通
+                    </button>
+                    <button id="acknowledgements-btn" class="inline-flex items-center px-6 py-2 rounded-full text-sm font-medium inactive-module">
+                        特别鸣谢
+                    </button>
+                    <button id="changelog-btn" class="inline-flex items-center px-6 py-2 rounded-full text-sm font-medium inactive-module">
+                        更新日志
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <!-- 行政区划模块 -->
+        <div id="division-module" class="module-content active">
+            <!-- 青岛行政区划 1949-2023 -->
+            <section id="division" class="mb-16 scroll-mt-20">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">青岛市行政区划变迁 (1949-2023)</h2>
+                    <p class="text-gray-600">根据国务院及山东省政府批复的行政区划调整方案整理</p>
+                </div>
+                
+                <!-- 时间线 -->
+                <div class="relative">
+                    <div class="timeline-connector"></div>
+
+                   <!-- 1949年 -->
+                    <div class="relative pl-14 pb-8">
+                        <div class="absolute left-0 top-0 w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold year-text">
+                            1949
+                        </div>
+                        <div class="bg-white rounded-lg shadow-sm p-5 border border-gray-100">
+                            <p class="text-gray-700">新中国成立后，青岛市归属山东省辖市，下辖市南区、市北区、台东区、台西区、四沧区、李村区、浮山区7个区（即现在的市南区、市北区、李沧区）</p>
+                        </div>
+                    </div>
+
+                 <!-- 1994年 -->
+                    <div class="relative pl-14 pb-8">
+                        <div class="absolute left-0 top-0 w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold year-text">
+                            1994
+                        </div>
+                        <div class="bg-white rounded-lg shadow-sm p-5 border border-gray-100">
+                            <p class="text-gray-700">新设立城阳区，至此，青岛市城市版图基本成型，下辖市南区、市北区、四方区、李沧区、崂山区、城阳区、黄岛区7区和即墨市、胶州市、平度市、胶南市、莱西市5市，此版图一直延续到2012年</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 2012年 -->
+                    <div class="relative pl-14 pb-8">
+                        <div class="absolute left-0 top-0 w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold year-text">
+                            2012
+                        </div>
+                        <div class="bg-white rounded-lg shadow-sm p-5 border border-gray-100">
+                            <p class="text-gray-700">国务院批复调整：市北区与四方区合并为新市北区；黄岛区与胶南市合并为新黄岛区，调整后下辖6区4市</p>
+                        </div>
+                    </div>
+
+                    <!-- 2014年 -->
+                    <div class="relative pl-14 pb-8">
+                        <div class="absolute left-0 top-0 w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold year-text">
+                            2014
+                        </div>
+                        <div class="bg-white rounded-lg shadow-sm p-5 border border-gray-100">
+                            <p class="text-gray-700">青岛市黄岛区成立中国第九个国家级新区——西海岸新区，成为青岛市经济发展的火车头</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 2017年 -->
+                    <div class="relative pl-14 pb-8">
+                        <div class="absolute left-0 top-0 w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold year-text">
+                            2017
+                        </div>
+                        <div class="bg-white rounded-lg shadow-sm p-5 border border-gray-100">
+                            <p class="text-gray-700">即墨撤市设区，辖7区3市：市南区、市北区、李沧区、崂山区、城阳区、黄岛区、即墨区、胶州市、平度市、莱西市</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 2023年 -->
+                    <div class="relative pl-14 pb-8">
+                        <div class="absolute left-0 top-0 w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold year-text">
+                            2023
+                        </div>
+                        <div class="bg-white rounded-lg shadow-sm p-5 border border-gray-100">
+                            <p class="text-gray-700">2023年10月，山东省政府印发《青岛都市圈发展规划》界定青岛都市圈范围青岛、潍坊、烟台、日照：主要青岛市全域，潍坊诸城市、高密市，日照市东港区，烟台莱阳市、莱州市、海阳市，共涉及4市16县(市、区)，面积2.15万平方公里</p>
+                        </div>
+                    </div>
+                 </div>
+            </section>
+            
+            <!-- 2023年最新青岛建制镇数量统计 -->
+            <section id="towns" class="mb-16 scroll-mt-20">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">2023年青岛市建制镇数量统计</h2>
+                    <p class="text-gray-600">已排除所有已升格为街道的原建制镇（数据来源：青岛市民政局2023年最新公告）</p>
+                </div>
+                
+                <!-- 建制镇数量统计 -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+                    <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-100 text-center transform transition-transform hover:scale-105">
+                        <div class="text-3xl font-bold text-primary mb-2">36</div>
+                        <div class="text-gray-600 text-sm">全市建制镇总数</div>
+                    </div>
+                    <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-100 text-center transform transition-transform hover:scale-105">
+                        <div class="text-3xl font-bold text-primary mb-2">12</div>
+                        <div class="text-gray-600 text-sm">平度市</div>
+                    </div>
+                    <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-100 text-center transform transition-transform hover:scale-105">
+                        <div class="text-3xl font-bold text-primary mb-2">8</div>
+                        <div class="text-gray-600 text-sm">莱西市</div>
+                    </div>
+                    <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-100 text-center transform transition-transform hover:scale-105">
+                        <div class="text-3xl font-bold text-primary mb-2">8</div>
+                        <div class="text-gray-600 text-sm">黄岛区</div>
+                    </div>
+                    <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-100 text-center transform transition-transform hover:scale-105">
+                        <div class="text-3xl font-bold text-primary mb-2">4</div>
+                        <div class="text-gray-600 text-sm">即墨区</div>
+                    </div>
+                    <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-100 text-center transform transition-transform hover:scale-105">
+                        <div class="text-3xl font-bold text-primary mb-2">4</div>
+                        <div class="text-gray-600 text-sm">胶州市</div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 2023年建制镇综合实力排名前10 -->
+            <section id="ranking" class="mb-16 scroll-mt-20">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">2023年青岛市建制镇综合实力排名（前10）</h2>
+                    <p class="text-gray-600">根据地区生产总值、财政收入、产业发展等指标综合评估，前三名分别为李哥庄镇、泊里镇和南村镇</p>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-100">
+                    <div class="divide-y divide-gray-200">
+                        <!-- 第1名 - 金色 -->
+                        <div class="flex items-center p-5 bg-gradient-to-r from-yellow-50 to-white">
+                            <div class="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-gold text-white font-bold shadow-md">
+                                1
+                            </div>
+                            <div class="ml-5 flex-grow">
+                                <h3 class="text-lg font-semibold text-gray-900">李哥庄镇</h3>
+                                <p class="text-gray-600 text-sm">胶州市 | 地区生产总值：186.5亿元</p>
+                            </div>
+                        </div>
+                        
+                        <!-- 第2名 - 铜色 -->
+                        <div class="flex items-center p-5 bg-gradient-to-r from-orange-50 to-white">
+                            <div class="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-bronze text-white font-bold shadow-md">
+                                2
+                            </div>
+                            <div class="ml-5 flex-grow">
+                                <h3 class="text-lg font-semibold text-gray-900">泊里镇</h3>
+                                <p class="text-gray-600 text-sm">黄岛区 | 地区生产总值：142.8亿元</p>
+                            </div>
+                        </div>
+                        
+                        <!-- 第3名 - 银色 -->
+                        <div class="flex items-center p-5 bg-gradient-to-r from-gray-50 to-white">
+                            <div class="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-silver text-white font-bold shadow-md">
+                                3
+                            </div>
+                            <div class="ml-5 flex-grow">
+                                <h3 class="text-lg font-semibold text-gray-900">南村镇</h3>
+                                <p class="text-gray-600 text-sm">平度市 | 地区生产总值：135.6亿元</p>
+                            </div>
+                        </div>
+                        
+                        <!-- 第4名 -->
+                        <div class="flex items-center p-5">
+                            <div class="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-gray-200 text-gray-700 font-bold">
+                                4
+                            </div>
+                            <div class="ml-5 flex-grow">
+                                <h3 class="text-lg font-semibold text-gray-900">姜山镇</h3>
+                                <p class="text-gray-600 text-sm">莱西市 | 地区生产总值：128.4亿元</p>
+                            </div>
+                        </div>
+                        
+                        <!-- 第5名 -->
+                        <div class="flex items-center p-5">
+                            <div class="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-gray-200 text-gray-700 font-bold">
+                                5
+                            </div>
+                            <div class="ml-5 flex-grow">
+                                <h3 class="text-lg font-semibold text-gray-900">铺集镇</h3>
+                                <p class="text-gray-600 text-sm">胶州市 | 地区生产总值：121.5亿元</p>
+                            </div>
+                        </div>
+                        
+                        <!-- 第6名 -->
+                        <div class="flex items-center p-5">
+                            <div class="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-gray-200 text-gray-700 font-bold">
+                                6
+                            </div>
+                            <div class="ml-5 flex-grow">
+                                <h3 class="text-lg font-semibold text-gray-900">大场镇</h3>
+                                <p class="text-gray-600 text-sm">黄岛区 | 地区生产总值：115.2亿元</p>
+                            </div>
+                        </div>
+                        
+                        <!-- 第7名 -->
+                        <div class="flex items-center p-5">
+                            <div class="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-gray-200 text-gray-700 font-bold">
+                                7
+                            </div>
+                            <div class="ml-5 flex-grow">
+                                <h3 class="text-lg font-semibold text-gray-900">田横镇</h3>
+                                <p class="text-gray-600 text-sm">即墨区 | 地区生产总值：108.7亿元</p>
+                            </div>
+                        </div>
+                        
+                        <!-- 第8名 -->
+                        <div class="flex items-center p-5">
+                            <div class="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-gray-200 text-gray-700 font-bold">
+                                8
+                            </div>
+                            <div class="ml-5 flex-grow">
+                                <h3 class="text-lg font-semibold text-gray-900">蓼兰镇</h3>
+                                <p class="text-gray-600 text-sm">平度市 | 地区生产总值：102.3亿元</p>
+                            </div>
+                        </div>
+                        
+                        <!-- 第9名 -->
+                        <div class="flex items-center p-5">
+                            <div class="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-gray-200 text-gray-700 font-bold">
+                                9
+                            </div>
+                            <div class="ml-5 flex-grow">
+                                <h3 class="text-lg font-semibold text-gray-900">琅琊镇</h3>
+                                <p class="text-gray-600 text-sm">黄岛区 | 地区生产总值：98.5亿元</p>
+                            </div>
+                        </div>
+                        
+                        <!-- 第10名 -->
+                        <div class="flex items-center p-5">
+                            <div class="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-gray-200 text-gray-700 font-bold">
+                                10
+                            </div>
+                            <div class="ml-5 flex-grow">
+                                <h3 class="text-lg font-semibold text-gray-900">店埠镇</h3>
+                                <p class="text-gray-600 text-sm">莱西市 | 地区生产总值：92.8亿元</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 数据来源 -->
+            <section id="source" class="scroll-mt-20">
+                <h2 class="text-2xl font-bold text-gray-800 mb-5">数据来源说明</h2>
+                
+                <div class="bg-white rounded-lg shadow-sm p-5 border border-gray-100">
+                    <ul class="space-y-3">
+                        <li class="flex">
+                            <div class="flex-shrink-0 mt-1">
+                                <i class="fa fa-file-text-o text-primary"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-base font-medium text-gray-900">国务院行政区划调整批复文件</h3>
+                                <p class="mt-1 text-sm text-gray-600">包括国函〔2012〕94号、国函〔2017〕105号、国函〔2019〕71号等</p>
+                            </div>
+                        </li>
+                        <li class="flex">
+                            <div class="flex-shrink-0 mt-1">
+                                <i class="fa fa-globe text-primary"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-base font-medium text-gray-900">青岛市人民政府官方网站</h3>
+                                <p class="mt-1 text-sm text-gray-600"><a href="http://www.qingdao.gov.cn" class="text-primary hover:underline" target="_blank">http://www.qingdao.gov.cn</a></p>
+                            </div>
+                        </li>
+                        <li class="flex">
+                            <div class="flex-shrink-0 mt-1">
+                                <i class="fa fa-bar-chart text-primary"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-base font-medium text-gray-900">青岛市统计局2023年统计年鉴</h3>
+                                <p class="mt-1 text-sm text-gray-600">包含各镇街经济社会发展主要指标</p>
+                            </div>
+                        </li>
+                        <li class="flex">
+                            <div class="flex-shrink-0 mt-1">
+                                <i class="fa fa-building text-primary"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-base font-medium text-gray-900">青岛市民政局行政区划公告</h3>
+                                <p class="mt-1 text-sm text-gray-600">2023年最新行政区划调整公告及建制镇名录</p>
+                            </div>
+                        </li>
+                    </ul>
+                    
+                    <div class="mt-5 pt-5 border-t border-gray-200">
+                        <p class="text-sm text-gray-500">
+                            数据更新时间：2023年12月31日
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </div>
+        
+        <!-- 公共交通模块 -->
+        <div id="transport-module" class="module-content">
+            <!-- 城运控股集团介绍 -->
+            <section id="chengyun-group" class="mb-16 scroll-mt-20">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">青岛城运控股集团</h2>
+                    <p class="text-gray-600">青岛市属大型国有企业，统筹全市公共交通资源运营</p>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <div class="md:w-2/3">
+                            <p class="text-gray-700 mb-4">
+                                青岛城运控股集团有限公司成立于2020年，是由原青岛公交集团、交运集团等整合组建的市属国有骨干企业，
+                                承担着青岛市公共交通运营服务的主体责任。集团业务涵盖城市公交、长途客运、轨道交通、旅游集散、
+                                汽车服务、物流货运等多个领域。
+                            </p>
+                            <p class="text-gray-700 mb-4">
+                                截至2025年，集团拥有各类运营车辆8700余辆，公交线路560余条，年客运量达7.5亿人次，
+                                形成了覆盖全市、辐射周边的综合交通运输网络，为市民提供便捷、安全、绿色的出行服务。
+                            </p>
+                            <div class="flex flex-wrap gap-2 mt-4">
+                                <span class="inline-flex items-center px-3 py-1 bg-primary/10 text-primary rounded-full text-sm">
+                                    <i class="fa fa-check-circle mr-1"></i> 公交运营
+                                </span>
+                                <span class="inline-flex items-center px-3 py-1 bg-primary/10 text-primary rounded-full text-sm">
+                                    <i class="fa fa-check-circle mr-1"></i> 长途客运
+                                </span>
+                                <span class="inline-flex items-center px-3 py-1 bg-primary/10 text-primary rounded-full text-sm">
+                                    <i class="fa fa-check-circle mr-1"></i> 智慧交通
+                                </span>
+                                <span class="inline-flex items-center px-3 py-1 bg-primary/10 text-primary rounded-full text-sm">
+                                    <i class="fa fa-check-circle mr-1"></i> 汽车服务
+                                </span>
+                            </div>
+                        </div>
+                        <div class="md:w-1/3">
+                            <div class="bg-gray-100 rounded-lg p-4 h-full flex flex-col justify-center">
+                                <div class="flex justify-between items-center mb-3">
+                                    <span class="text-gray-600">运营线路</span>
+                                    <span class="font-semibold text-primary">560+ 条</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2 mb-4">
+                                    <div class="bg-primary h-2 rounded-full" style="width: 85%"></div>
+                                </div>
+                                
+                                <div class="flex justify-between items-center mb-3">
+                                    <span class="text-gray-600">运营车辆</span>
+                                    <span class="font-semibold text-primary">8700+ 辆</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2 mb-4">
+                                    <div class="bg-primary h-2 rounded-full" style="width: 92%"></div>
+                                </div>
+                                
+                                <div class="flex justify-between items-center mb-3">
+                                    <span class="text-gray-600">年客运量</span>
+                                    <span class="font-semibold text-primary">7.5+ 亿人次</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-primary h-2 rounded-full" style="width: 78%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 城运控股子公司介绍 -->
+            <section id="subsidiaries" class="mb-16 scroll-mt-20">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">城运控股子公司介绍</h2>
+                    <p class="text-gray-600">负责各区域公共交通运营的主要子公司概况</p>
+                </div>
+                
+                <!-- 前四个子公司保持网格布局 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <!-- 青岛公交集团 -->
+                    <div class="company-card">
+                        <div class="h-24 bg-gradient-to-r from-seaBlue/90 to-seaBlue flex items-center justify-center">
+                            <h3 class="text-white text-xl font-bold">青岛公交集团</h3>
+                        </div>
+                        <div class="p-5">
+                            <p class="text-gray-700 text-sm mb-4">
+                                主要负责青岛市核心区域公共交通运营，
+                                主要运营市南区、市北区等区域的公交线路，现拥有公交线路300+条
+                                (包含城阳巴士公司的常规公交82条和有轨电车线路1条)
+                            </p>
+                            
+                            <h4 class="font-medium text-gray-900 mb-2">代表线路</h4>
+                            <div>
+                                <div class="route-item">
+                                    <span class="route-tag mt-0.5">1路</span>
+                                    <span class="route-details">【安徽路湖北路 - 四方宣化路】全长9.7公里，于1947年4月1日开通的元首线路，途径青大附院、台东步行街等便民区域</span>
+                                </div>
+                                <div class="route-item">
+                                    <span class="route-tag mt-0.5">304路</span>
+                                    <span class="route-details">【观城路停车场 - 流清河】全长37.6公里，青岛市最后的有人售票线路，途径栈桥、五四广场、崂山等诸多风景区</span>
+                                </div>
+                                    <div class="route-item">
+                                    <span class="route-tag mt-0.5">502路</span>
+                                    <span class="route-details">【市政府南通路 - 长城路】全长34.3公里，青岛市区跨度最大的线路，途径市南、市北、李沧、城阳四个市辖区</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 城阳巴士公司 -->
+                    <div class="company-card">
+                        <div class="h-24 bg-gradient-to-r from-seaBlue/80 to-seaBlue flex items-center justify-center">
+                            <h3 class="text-white text-xl font-bold">城阳巴士公司</h3>
+                        </div>
+                        <div class="p-5">
+                            <p class="text-gray-700 text-sm mb-4">
+                                主要负责城阳区以及周边区域的公共交通服务，
+                                现拥有公交线路83条（包含有轨电车线路1条）
+                            </p>
+                            
+                            <h4 class="font-medium text-gray-900 mb-2">代表线路</h4>
+                            <div>
+                                <div class="route-item">
+                                    <span class="route-tag mt-0.5">117路</span>
+                                    <span class="route-details">【兴华路永平路 - 长城路】全长24.4公里，青岛城阳区的重点线路之一，途径多个商圈、学校、地铁站等区域</span>
+                                </div>
+                                <div class="route-item">
+                                    <span class="route-tag mt-0.5">916路</span>
+                                    <span class="route-details">【文阳路停车场 - 胶东国际机场】全长40.7公里，青岛城阳区的重点线路之一，是前往胶东机场的重要干线</span>
+                                </div>
+                                    <div class="route-item">
+                                    <span class="route-tag mt-0.5">947路</span>
+                                    <span class="route-details">【铁路青岛北站东广场 - 方特梦幻王国】全长28.8公里，是一条环湾线路，途径多个生活区，可欣赏胶州湾的风景</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 西海岸交发集团 -->
+                    <div class="company-card">
+                        <div class="h-24 bg-gradient-to-r from-seaBlue/70 to-seaBlue flex items-center justify-center">
+                            <h3 class="text-white text-xl font-bold">西海岸交发集团</h3>
+                        </div>
+                        <div class="p-5">
+                            <p class="text-gray-700 text-sm mb-4">
+                                主要负责黄岛区（西海岸新区）的公共交通运营服务，是西海岸新区公共交通的主力军，
+                                现拥有公交线路116条
+                            </p>
+                            
+                            <h4 class="font-medium text-gray-900 mb-2">代表线路</h4>
+                            <div>
+                                <div class="route-item">
+                                    <span class="route-tag mt-0.5">1822路（原K22路）</span>
+                                    <span class="route-details">【铁路青岛西站 - 刘公岛路公交场站】全长40.5公里，是一条连接青岛西海岸新区众多交通枢纽的优质快线</span>
+                                </div>
+                                <div class="route-item">
+                                    <span class="route-tag mt-0.5">1309路（原309路）</span>
+                                    <span class="route-details">【珠山路公交场站 - 新街口】全长35.3公里，是青岛西海岸新区的重要线路之一，途径原胶南市和原黄岛区，可与地铁无缝衔接</span>
+                                </div>
+                                <div class="route-item">
+                                    <span class="route-tag mt-0.5">1513路（原513路）</span>
+                                    <span class="route-details">【西海岸汽车总站（交发汽车城） - 海青枢纽站】全长56.4公里，是青岛西海岸新区里程最长的线路，可满足不同区域市民的出行需求</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 胶州交发集团 -->
+                    <div class="company-card">
+                        <div class="h-24 bg-gradient-to-r from-seaBlue/60 to-seaBlue flex items-center justify-center">
+                            <h3 class="text-white text-xl font-bold">胶州交发集团</h3>
+                        </div>
+                        <div class="p-5">
+                            <p class="text-gray-700 text-sm mb-4">
+                                主要负责胶州市域内的公共交通运营，以及胶州与周边区域的公交连接，
+                                现有公交线路57条，覆盖胶州主城区以及西南部分乡镇地区
+                            </p>
+                            
+                            <h4 class="font-medium text-gray-900 mb-2">代表线路</h4>
+                            <div>
+                                <div class="route-item">
+                                    <span class="route-tag mt-0.5">3007路</span>
+                                    <span class="route-details">【胶州京典医院 - 正阳西路祥和路】全长27.9公里，是胶州市区的跨区线路之一</span>
+                                </div>
+                                <div class="route-item">
+                                    <span class="route-tag mt-0.5">3502路</span>
+                                    <span class="route-details">【胶州汽车总站 - 张家屯小学】全长45.9公里，连接胶州市区与多个乡镇的重要干线</span>
+                                </div>
+                                <div class="route-item">
+                                    <span class="route-tag mt-0.5">3522路</span>
+                                    <span class="route-details">【铺集客运站 - 大相家东】全长33.5公里，连接胶州市西南三镇的重要干线</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 真情巴士集团单独模块 -->
+                <div class="mb-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">真情巴士集团（独立运营主体）</h3>
+                    <div class="company-card">
+                        <div class="h-24 bg-gradient-to-r from-seaBlue/50 to-seaBlue flex items-center justify-center">
+                            <h3 class="text-white text-xl font-bold">真情巴士集团</h3>
+                        </div>
+                        <div class="p-5">
+                            <p class="text-gray-700 text-sm mb-4">
+                                主要负责黄岛区东部城区的公共交通运营（部分线路现已延伸至西部城区），是西海岸新区重要的公共交通运营主体之一，
+                                现拥有公交线路101条，以优质服务著称，多次荣获全国公交行业服务质量奖项
+                            </p>
+                            
+                            <h4 class="font-medium text-gray-900 mb-2">代表线路</h4>
+                            <div>
+                                <div class="route-item">
+                                    <span class="route-tag mt-0.5">1801路（原K1路）</span>
+                                    <span class="route-details">【青岛真情巴士集团 - 珠山路公交场站】全长29.0公里，是连接黄岛开发区与胶南主城区的重要纽带</span>
+                                </div>
+                                <div class="route-item">
+                                    <span class="route-tag mt-0.5">1041路（原41路）</span>
+                                    <span class="route-details">【荒里/荒里西 - 大相家东】全长29.2公里，是连接黄岛与胶州的重要公交线路</span>
+                                </div>
+                                    <div class="route-item">
+                                    <span class="route-tag mt-0.5">1806路（原806路）</span>
+                                    <span class="route-details">【老年大学长白山路校区 -铁路青岛西站】全长34.9公里，是真情巴士开通的唯一一条从开发区到青岛西站的常规公交线路</span>
+                                </div>
+                                <div class="route-item">
+                                    <span class="route-tag mt-0.5">1908路（原808路）</span>
+                                    <span class="route-details">【薛家岛公交枢纽站 - 银沙滩路陇西山路】，全长25.3公里，曾被评为中国最美公交线</span>
+                                </div>
+                                <div class="route-item">
+                                    <span class="route-tag mt-0.5">1622路（原902路）</span>
+                                    <span class="route-details">【铁路董家口站 - 宋家岭】全长21.4公里，是连接黄岛董家口与日照东港的重要通道</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        
+        <!-- 特别鸣谢模块 -->
+        <div id="acknowledgements-module" class="module-content">
+            <section id="acknowledgements" class="scroll-mt-20">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">特别鸣谢</h2>
+                    <p class="text-gray-600">感谢为本网站信息收集提供支持的个人和团队</p>
+                </div>
+                
+                <!-- 网页编写与后期修改 -->
+                <div class="mb-6">
+                    <div class="bg-white rounded-lg shadow-sm p-5 border border-gray-100">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-3 flex items-center">
+                            <i class="fa fa-code text-primary mr-2"></i>网页编写与后期修改
+                        </h3>
+                        <p class="text-gray-700">小猛Plus（网页代码编写及后期修改）</p>
+                    </div>
+                </div>
+                
+                <!-- 所在团队 -->
+                <div class="mb-6">
+                    <div class="bg-white rounded-lg shadow-sm p-5 border border-gray-100">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-3 flex items-center">
+                            <i class="fa fa-users text-primary mr-2"></i>所在团队
+                        </h3>
+                        <p class="text-gray-700">青岛市城市综合交流群②（群号 788926166）</p>
+                    </div>
+                </div>
+                
+                <!-- 特别鸣谢 -->
+                <div>
+                    <div class="bg-white rounded-lg shadow-sm p-5 border border-gray-100">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-3 flex items-center">
+                            <i class="fa fa-heart text-primary mr-2"></i>特别鸣谢
+                        </h3>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full text-sm">
+                                <thead>
+                                    <tr class="bg-gray-50">
+                                        <th class="py-2 px-3 text-left text-gray-600 font-medium">网友名称</th>
+                                        <th class="py-2 px-3 text-left text-gray-600 font-medium">QQ号</th>
+                                        <th class="py-2 px-3 text-left text-gray-600 font-medium">提供线路</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-100">
+                                        <tr>
+                                        <td class="py-2 px-3">@小猛Plus</td>
+                                        <td class="py-2 px-3">2591321267</td>
+                                        <td class="py-2 px-3">城阳巴士916路、胶州3007路、胶州3502路、胶州3522路、真情巴士41路</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 px-3">@L13-两河站</td>
+                                        <td class="py-2 px-3">3392026185</td>
+                                        <td class="py-2 px-3">真情巴士K1路、西海岸K22路、西海岸309路、真情巴士902路</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 px-3">@L1-小村庄站</td>
+                                        <td class="py-2 px-3">3771043913</td>
+                                        <td class="py-2 px-3">青岛1路、青岛304路、青岛502路</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 px-3">@申沃</td>
+                                        <td class="py-2 px-3">1841537092</td>
+                                        <td class="py-2 px-3">城阳巴士117路</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 px-3">@青大附院西海岸院区</td>
+                                        <td class="py-2 px-3">498361830</td>
+                                        <td class="py-2 px-3">城阳巴士947路</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 px-3">@304路售票员</td>
+                                        <td class="py-2 px-3">2548503172</td>
+                                        <td class="py-2 px-3">西海岸513路、真情巴士806路</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 px-3">@超级无敌李子树</td>
+                                        <td class="py-2 px-3">3213806907</td>
+                                        <td class="py-2 px-3">真情巴士808路</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+        
+        <!-- 更新日志模块 -->
+        <div id="changelog-module" class="module-content">
+            <section class="mb-16">
+                <div class="mb-6">
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        版本
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        更新时间
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        更新内容
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                        v1.2
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        2025-12-30
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-600">
+                                        根据青岛西海岸新区政务网发布的《关于公交线路号升位的公告》一文，将 西海岸交发集团 和 真情巴士集团 所有营运线路信息进行修改
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                        v1.1
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        2025-08-31
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-600">
+                                        补充了“行政区划”板块中的信息，并新增“更新日志”板块
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                        v1.0
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        2025-08-29
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-600">
+                                        网站单文件上线至“青岛市城市综合交流群②”，更新“行政区划”板块和“公共交通”板块，后期增加“特别鸣谢”板块
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    
+    <script>
+        // 模块切换功能
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取所有按钮和模块
+            const divisionBtn = document.getElementById('division-btn');
+            const transportBtn = document.getElementById('transport-btn');
+            const acknowledgementsBtn = document.getElementById('acknowledgements-btn');
+            const changelogBtn = document.getElementById('changelog-btn');
+            
+            const divisionModule = document.getElementById('division-module');
+            const transportModule = document.getElementById('transport-module');
+            const acknowledgementsModule = document.getElementById('acknowledgements-module');
+            const changelogModule = document.getElementById('changelog-module');
+            
+            // 所有按钮和模块的映射关系
+            const modules = [
+                { btn: divisionBtn, module: divisionModule },
+                { btn: transportBtn, module: transportModule },
+                { btn: acknowledgementsBtn, module: acknowledgementsModule },
+                { btn: changelogBtn, module: changelogModule }
+            ];
+            
+            // 切换模块的函数
+            function switchModule(activeBtn, activeModule) {
+                // 重置所有按钮和模块
+                modules.forEach(item => {
+                    item.btn.classList.remove('active-module');
+                    item.btn.classList.add('inactive-module');
+                    item.module.classList.remove('active');
+                });
+                
+                // 激活当前模块
+                activeBtn.classList.remove('inactive-module');
+                activeBtn.classList.add('active-module');
+                activeModule.classList.add('active');
+            }
+            
+            // 绑定按钮事件
+            divisionBtn.addEventListener('click', () => switchModule(divisionBtn, divisionModule));
+            transportBtn.addEventListener('click', () => switchModule(transportBtn, transportModule));
+            acknowledgementsBtn.addEventListener('click', () => switchModule(acknowledgementsBtn, acknowledgementsModule));
+            changelogBtn.addEventListener('click', () => switchModule(changelogBtn, changelogModule));
+        });
+    </script>
+</body>
+</html>
